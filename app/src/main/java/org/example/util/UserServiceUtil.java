@@ -9,6 +9,8 @@ public class UserServiceUtil
         return BCrypt.hashpw(plainPassword, BCrypt.gensalt());
     }
 
+
+
     public static boolean checkPassword(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }

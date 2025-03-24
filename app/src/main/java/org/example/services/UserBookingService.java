@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.entities.Train;
 import org.example.entities.User;
+import org.example.util.UserServiceUtil;
 //import org.apache.commons.io;
 
 import java.io.FileReader;
@@ -27,16 +28,26 @@ public class UserBookingService {
     public UserBookingService(User user1) throws IOException
     {
         this.user = user1;
+        loadUsers();
+    }
+
+    public UserBookingService() throws IOException{
+        loadUsers();
+    }
+
+    public List<User> loadUsers() throws IOException{
         File users = new File(USERS_PATH);
         userList = objectMapper.readValue(users, new TypeReference<List<User>>(){});
+        return List.of();
     }
 
     public Boolean loginUser(){
-        Optional<User> foundUser = userList.stream().filter(user1 -> {
-            Object UserServiceUtil = null;
-            boolean b = user1.getName().equals(user.getName()) && UserServiceUtil.checkPassword(user.getPassword(), user1.getHashedPassword());
-            return b;
-        }).findFirst();
+        UserServiceUtil util = new UserServiceUtil(); // Initialize utility class
+        Optional<User> foundUser = userList.stream().filter(user1 ->
+                user1.getName().equals(user.getName()) &&
+                        util.checkPassword(user.getPassword(), user1.getHashedPassword())
+        ).findFirst();
+
         return foundUser.isPresent();
     }
 
@@ -46,7 +57,7 @@ public class UserBookingService {
             saveUserListtoFile();
             return Boolean.TRUE;
         }
-        catch (IOException){
+        catch (IOException ex){
             return Boolean.FALSE;
         }
     }
@@ -123,5 +134,9 @@ public class UserBookingService {
         }catch (IOException ex){
             return Boolean.FALSE;
         }
+    }
+
+    public void fetchBookings() {
+        user.printTickets();
     }
 }
