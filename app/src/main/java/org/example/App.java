@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.Arrays;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.example.services.UserBookingService;
+
 
 public class App {
 
@@ -20,10 +22,11 @@ public class App {
         UserBookingService userBookingService = null;
 
         try{
-            UserBookingService UserBookingService = new UserBookingService();
+            userBookingService = new UserBookingService();
         }
         catch (IOException ex){
-            System.out.println("there is something wrong");
+            ex.printStackTrace(); // Print the error to understand why it fails
+            System.out.println("Error: " + ex.getMessage());
             return;
         }
         while(option!=7){
@@ -83,6 +86,7 @@ public class App {
                     break;
                 case 5:
                     System.out.println("Select a seat out of these seats");
+                    assert userBookingService != null;
                     List<List<Integer>> seats = userBookingService.fetchSeats(trainSelectedForBooking);
                     for (List<Integer> row: seats){
                         for (Integer val: row){

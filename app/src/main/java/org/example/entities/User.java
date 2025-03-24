@@ -1,7 +1,10 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true) // This will ignore unrecognized fields
 public class User {
 	private String name;
     private String password;
