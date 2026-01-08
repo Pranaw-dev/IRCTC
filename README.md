@@ -39,7 +39,7 @@ It was developed as a **major project for my college end-semester dissertation**
 | Backend | Java |
 | Framework | Spring Boot |
 | Build Tool | Gradle |
-| Testing | JUnit / Mockito (optional) |
+| Testing | JUnit |
 | Version Control | Git & GitHub |
 
 
